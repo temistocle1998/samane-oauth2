@@ -42,11 +42,6 @@ class OAuthAccessToken
     private $scope;
 
     /**
-     * @Column \src\entities\OAuthUser
-     */
-    private $user;
-
-    /**
      * Get id
      *
      * @return integer

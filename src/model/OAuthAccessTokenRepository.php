@@ -31,11 +31,11 @@ class OAuthAccessTokenRepository extends Model implements \OAuth2\Storage\Access
         ->getOneOrNullResult();
         $user = $this->db->createQuery('SELECT o FROM OAuthUser o WHERE o.email = :email')
         ->setParameter('email', $userEmail)
-        ->getResult();
+        ->getOneOrNullResult();
         $token = \OAuthAccessToken::fromArray([
             'token'     => $oauthToken,
             'client_id'    => $client,
-            'user'      => $user,
+            'user_id'      => $user,
             'expires'   => (new \DateTime())->setTimestamp($expires),
             'scope'     => $scope,
         ]);
