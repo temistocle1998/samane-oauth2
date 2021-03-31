@@ -100,7 +100,7 @@ class Authenticate extends \OAuth2\Server
         if (!$server->verifyResourceRequest(\OAuth2\Request::createFromGlobals())) 
         {
             $server->getResponse()->send();
-            die;
+            die("Non authorisé !");
         }
         echo json_encode(array('success' => true, 'message' => 'Vous avez acces a SAMANE API !'));
               

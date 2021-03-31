@@ -1,31 +1,42 @@
 <?php
-/*==================================================
-MODELE MVC DEVELOPPE PAR Ngor SECK
-ngorsecka@gmail.com
-(+221) 77 - 433 - 97 - 16
-PERFECTIONNEZ CE MODELE ET FAITES MOI UN RETOUR
-POUR TOUTE MODIFICATION VISANT A L'AMELIORER.
-VOUS ETES LIBRE DE TOUTE UTILISATION.
-===================================================*/ 
 use libs\system\Controller; 
 use src\service\authentification\Authenticate;
+use src\service\authentification\OAuthJwt;
+
 use src\model\OAuthClientRepository;
 use src\model\OAuthUserRepository;
 use src\model\OAuthAccessTokenRepository;
 use src\model\OAuthAuthorizationCodeRepository;
 use src\model\OAuthRefreshTokenRepository;
+ini_set('display_errors', 1);error_reporting(E_ALL);
 
+/**
+ * TokenController
+ */
 class TokenController extends Controller
 {
+    
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct();
 
     }
-    /* EFFECTUER CETTE REQUETE POUR OBTENIR UN TOKEN D'ACCES  
-    *   curl -u testclient:passer http://localhost:8000/Token/token -d 'grant_type=client_credentials'
-    */
-
+    /**
+     * EFFECTUER CETTE REQUETE POUR OBTENIR UN TOKEN D'ACCES  
+     * curl -u testclient:passer http://localhost:8000/Token/token 
+     * -d 'grant_type=client_credentials'
+     */
+    
+    /**
+     * Permet d'obtenir un access_token
+     *
+     * @return token
+     */
     public function token()
     {
         $md = new OAuthClientRepository();
@@ -39,22 +50,25 @@ class TokenController extends Controller
         //$accessTokenStorage = $fd->getOAuthAccessToken();
         $authorizationCodeStorage = $mg->getAuthorization();
         $refreshTokenStorage = $zd->getRefreshTokens();
-        // Handle a request for an OAuth2.0 Access Token and send the response to the client
-       $server = new Authenticate();
-        //$md = new OAuthRepository();
-        //$clientStorage = $md->getOAuthClient();
-        //var_dump($clientStorage);
-               // $md = new OAuthClientRepository();
-        $cls = new OAuthClientRepository();
-        if ($cls instanceof \OAuth2\Storage\ClientCredentialsInterface) 
-        {
-            
-       $server->authObject($md, $ad, $fd, $mg);
-            
-        //var_dump($md->getOAuthClient());
-        }
-        else
-            echo "no";
+        /**
+         * Handle a request for an OAuth2.0 Access Token and 
+         * send the response to the client
+         */
+        $server = new Authenticate();
+        
+        $server->authObject($md, $ad, $fd, $mg);
+        
+    }
+    
+    /**
+     * Renvoie un jeton
+     *
+     * @return jwt
+     */
+    public function testJwt()
+    {
+        $jwt = new OAuthJwt();
+        $jwt->authObject();
     }
 }
 ?>
