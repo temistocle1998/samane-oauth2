@@ -8,7 +8,7 @@ class OAuthUserRepository extends Model implements UserCredentialsInterface
 {
     public function checkUserCredentials($email, $password)
     {
-        $user = $this->findOneBy(['email' => $email]);
+        $user = $this->db->getRepository('OAuthUser')->findOneBy(['email' => $email]);
         if ($user) {
             return $user->verifyPassword($password);
         }
@@ -29,7 +29,7 @@ class OAuthUserRepository extends Model implements UserCredentialsInterface
      */
     public function getUserDetails($email)
     {
-        $user = $this->findOneBy(['email' => $email]);
+        $user = $this->getRepository('OAuthUser')->findOneBy(['email' => $email]);
         if ($user) {
             $user = $user->toArray();
         }

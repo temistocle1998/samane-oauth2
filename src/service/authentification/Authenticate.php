@@ -31,7 +31,7 @@ class Authenticate extends \OAuth2\Server
 
     }
 
-    public function authObject($clientStorage, $userStorage, $accessTokenStorage, $authorizationCodeStorage)
+    public function authObject($clientStorage, $userStorage, $accessTokenStorage, $authorizationCodeStorage, $refreshTokenStorage)
     {
         // Pass the doctrine storage objects to the OAuth2 server class
         $server = new \OAuth2\Server(
@@ -40,7 +40,7 @@ class Authenticate extends \OAuth2\Server
             'user_credentials'   => $userStorage,
             'access_token'       => $accessTokenStorage,
             'authorization_code' => $authorizationCodeStorage,
-            //'refresh_token'      => $refreshTokenStorage,
+            'refresh_token'      => $refreshTokenStorage,
             ], [
             'auth_code_lifetime' => 30,
             'refresh_token_lifetime' => 30,
@@ -53,15 +53,14 @@ class Authenticate extends \OAuth2\Server
         // handle the request
         $server->addGrantType(new ClientCredentials($clientStorage));
         $server->addGrantType(new AuthorizationCode($authorizationCodeStorage));
-        //$server->addGrantType(new RefreshToken($refreshStorage));
 		$server->addGrantType(new UserCredentials($userStorage));
 	
        // $server->addGrantType(new AuthorizationCode($authorizationCodeStorage));
-//$server->addGrantType( new RefreshToken($refreshTokenStorage, [
-                // the refresh token grant request will have a "refresh_token" field
+$server->addGrantType( new RefreshToken($refreshTokenStorage, [
+                //the refresh token grant request will have a "refresh_token" field
                 // with a new refresh token on each request
-                //'always_issue_new_refresh_token' => true,
-                //]));
+                'always_issue_new_refresh_token' => true,
+                ]));
         $server->handleTokenRequest(\OAuth2\Request::createFromGlobals())->send();
 
     }
@@ -102,8 +101,10 @@ class Authenticate extends \OAuth2\Server
             $server->getResponse()->send();
             die("Non authorisé !");
         }
+        $token = $server->getAccessTokenData(\OAuth2\Request::createFromGlobals());
+        $username = $token['user_id'];
         echo json_encode(array('success' => true, 'message' => 'Vous avez acces a SAMANE API !'));
-              
+          //var_dump($token['user_id']);    
     }    
 
 }

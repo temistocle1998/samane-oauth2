@@ -8,7 +8,7 @@ class OAuthRefreshTokenRepository extends Model implements RefreshTokenInterface
 {
     public function getRefreshToken($refreshToken)
     {
-        $refreshToken = $this->db->findOneBy(['refresh_token' => $refreshToken]);
+        $refreshToken = $this->db->getRepository('OAuthRefreshToken')->findOneBy(['refresh_token' => $refreshToken]);
         if ($refreshToken) {
             $refreshToken = $refreshToken->toArray();
             $refreshToken['expires'] = $refreshToken['expires']->getTimestamp();
@@ -35,7 +35,7 @@ class OAuthRefreshTokenRepository extends Model implements RefreshTokenInterface
 
     public function unsetRefreshToken($refreshToken)
     {
-        $refreshToken = $this->findOneBy(['refresh_token' => $refreshToken]);
+        $refreshToken = $this->getRepository('OAuthRefreshToken')->findOneBy(['refresh_token' => $refreshToken]);
         $this->db->remove($refreshToken);
         $this->db->flush();
     }

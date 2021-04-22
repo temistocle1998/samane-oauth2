@@ -1,12 +1,4 @@
 <?php
-/*==================================================
-MODELE MVC DEVELOPPE PAR Ngor SECK
-ngorsecka@gmail.com
-(+221) 77 - 433 - 97 - 16
-PERFECTIONNEZ CE MODELE ET FAITES MOI UN RETOUR
-POUR TOUTE MODIFICATION VISANT A L'AMELIORER.
-VOUS ETES LIBRE DE TOUTE UTILISATION.
-===================================================*/ 
 use libs\system\Controller; 
 use src\service\authentification\Authenticate;
 use src\model\OAuthClientRepository;
@@ -14,6 +6,7 @@ use src\model\OAuthUserRepository;
 use src\model\OAuthAccessTokenRepository;
 use src\model\OAuthAuthorizationCodeRepository;
 use src\model\OAuthRefreshTokenRepository;
+ini_set('display_errors', 1);error_reporting(E_ALL);
 
 class RessourcesController extends Controller
 {

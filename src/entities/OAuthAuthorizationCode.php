@@ -223,7 +223,7 @@ class OAuthAuthorizationCode
      * @param \YourNamespace\Entity\OAuthUser $user
      * @return OAuthRefreshToken
      */
-    public function setUser(\YourNamespace\Entity\OAuthUser $user = null)
+    public function setUser(OAuthUser $user = null)
     {
         $this->user = $user;
 

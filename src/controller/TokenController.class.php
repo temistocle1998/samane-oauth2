@@ -56,7 +56,7 @@ class TokenController extends Controller
          */
         $server = new Authenticate();
         
-        $server->authObject($md, $ad, $fd, $mg);
+        $server->authObject($md, $ad, $fd, $mg, $zd);
         
     }
     

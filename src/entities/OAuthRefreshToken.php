@@ -12,17 +12,6 @@ class OAuthRefreshToken
      * @Column(type="string")
      */
     private $refresh_token;
-
-    /**
-     * @Column(type="string")
-     */
-    private $client_id;
-
-     /**
-     * @Column(type="string")
-     */
-    private $user_id;
-
      /**
      * @Column(type="datetime")
      */
@@ -34,12 +23,18 @@ class OAuthRefreshToken
     private $scope;
 
     /**
-     * @var \YourNamespace\Entity\OAuthClient
+     * Many OAuthAccessTokens have one oauthclient. This is the owning side.
+     *
+     * @ManyToOne(targetEntity="OAuthClient", inversedBy="oauth_refresh_tokens", fetch="EAGER")
+     * @JoinColumn(name="client_id",          referencedColumnName="id")
      */
     private $client;
 
-    /**
-     * @var \YourNamespace\Entity\OAuthUser
+   /**
+     * Many OAuthAccessTokens have one oauthuser. This is the owning side.
+     *
+     * @ManyToOne(targetEntity="OAuthUser", inversedBy="oauth_refresh_tokens", fetch="EAGER")
+     * @JoinColumn(name="user_id",          referencedColumnName="id")
      */
     private $user;
 
@@ -174,7 +169,7 @@ class OAuthRefreshToken
      * @param \YourNamespace\Entity\OAuthClient $client
      * @return OAuthRefreshToken
      */
-    public function setClient(\YourNamespace\Entity\OAuthClient $client = null)
+    public function setClient(OAuthClient $client = null)
     {
         $this->client = $client;
 
@@ -197,7 +192,7 @@ class OAuthRefreshToken
      * @param \YourNamespace\Entity\OAuthUser $user
      * @return OAuthRefreshToken
      */
-    public function setUser(\YourNamespace\Entity\OAuthUser $user = null)
+    public function setUser(OAuthUser $user = null)
     {
         $this->user = $user;
 

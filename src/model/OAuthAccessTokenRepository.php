@@ -1,7 +1,6 @@
 <?php
 namespace src\model;
 use libs\system\Model; 
-
 use \OAuth2\Storage\AccessTokenInterface;
 
 class OAuthAccessTokenRepository extends Model implements \OAuth2\Storage\AccessTokenInterface

@@ -44,33 +44,19 @@ class OAuthJwt extends \OAuth2\Server
         ),
         // add a Client ID for testing
         'client_credentials' => array(
-            'CLIENT_ID' => array('client_secret' => 'CLIENT_SECRET')
+            'CLIENT_ID' => ['client_secret' => 'CLIENT_SECRET']
         ),
     ));
-        // Pass the doctrine storage objects to the OAuth2 server class
         $server = new \OAuth2\Server(
             $storage, [
-            'auth_code_lifetime' => 30,
-            'refresh_token_lifetime' => 30,
             'use_jwt_access_tokens' => true,
             ]
         );
-        // will be able to handle token requests when "grant_type=client_credentials".
-        //$server->addGrantType(new OAuth2\GrantType\ClientCredentials($clientStorage));
 
         
         // handle the request
-        $server->addGrantType(new ClientCredentials($storage));
-        //$server->addGrantType(new AuthorizationCode($authorizationCodeStorage));
-        //$server->addGrantType(new RefreshToken($refreshStorage));
-		//$server->addGrantType(new UserCredentials($userStorage));
-	
-       // $server->addGrantType(new AuthorizationCode($authorizationCodeStorage));
-//$server->addGrantType( new RefreshToken($refreshTokenStorage, [
-                // the refresh token grant request will have a "refresh_token" field
-                // with a new refresh token on each request
-                //'always_issue_new_refresh_token' => true,
-                //]));
+        $server->addGrantType(new \OAuth2\GrantType\ClientCredentials($storage));
+    
         $server->handleTokenRequest(\OAuth2\Request::createFromGlobals())->send();
 
     }  
