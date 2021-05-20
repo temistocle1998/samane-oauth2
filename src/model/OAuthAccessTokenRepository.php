@@ -23,18 +23,18 @@ class OAuthAccessTokenRepository extends Model implements \OAuth2\Storage\Access
         }
     }
 
-    public function setAccessToken($oauthToken, $clientIdentifier, $userEmail, $expires, $scope = null)
+    public function setAccessToken($oauthToken, $clientIdentifier, $username, $expires, $scope = null)
     {
         $client = $this->db->createQuery('SELECT o FROM OAuthClient o WHERE o.client_identifier = :client_identifier')
         ->setParameter('client_identifier', $clientIdentifier)
         ->getOneOrNullResult();
-        $user = $this->db->createQuery('SELECT o FROM OAuthUser o WHERE o.email = :email')
-        ->setParameter('email', $userEmail)
+        $user = $this->db->createQuery('SELECT o FROM OAuthUser o WHERE o.username = :username')
+        ->setParameter('username', $username)
         ->getOneOrNullResult();
         $token = \OAuthAccessToken::fromArray([
             'token'     => $oauthToken,
-            'client_id'    => $client,
-            'user_id'      => $user,
+            'client_id' => $client,
+            'user_id'   => $user,
             'expires'   => (new \DateTime())->setTimestamp($expires),
             'scope'     => $scope,
         ]);
@@ -44,7 +44,6 @@ class OAuthAccessTokenRepository extends Model implements \OAuth2\Storage\Access
 
     public function getOAuthAccessToken()
     {
-      
         return $this->db->createQuery('SELECT o FROM OAuthAccessToken o')->getResult();
     }
 }

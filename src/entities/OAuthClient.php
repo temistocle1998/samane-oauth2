@@ -30,6 +30,11 @@ class OAuthClient extends EncryptableFieldEntity
     */
     private $oauth_access_tokens;
     /**
+    * One OAuthClient has many oauthrefreshtokens. This is the inverse side.
+    * @OneToMany(targetEntity="OAuthRefreshToken", mappedBy="client_id")
+    */
+    private $oauth_refresh_tokens;
+    /**
     * One OAuthClient has many oauthauthorizationcodes. This is the inverse side.
     * @OneToMany(targetEntity="OAuthAuthorizationCode", mappedBy="client_id")
     */

@@ -8,7 +8,9 @@ class OAuthRefreshTokenRepository extends Model implements RefreshTokenInterface
 {
     public function getRefreshToken($refreshToken)
     {
-        $refreshToken = $this->db->getRepository('OAuthRefreshToken')->findOneBy(['refresh_token' => $refreshToken]);
+        $refreshToken = $this->db->createQuery('SELECT o FROM OAuthRefreshToken o WHERE o.refresh_token =:refresh_token')
+        ->setParameter('refresh_token', $refreshToken)
+        ->getOneOrNullResult();
         if ($refreshToken) {
             $refreshToken = $refreshToken->toArray();
             $refreshToken['expires'] = $refreshToken['expires']->getTimestamp();
@@ -16,13 +18,15 @@ class OAuthRefreshTokenRepository extends Model implements RefreshTokenInterface
         return $refreshToken;
     }
 
-    public function setRefreshToken($refreshToken, $clientIdentifier, $userEmail, $expires, $scope = null)
+    public function setRefreshToken($refreshToken, $clientIdentifier, $username, $expires, $scope = null)
     {
-        $client = $this->db->getRepository('OAuthClient')
-                            ->findOneBy(['client_identifier' => $clientIdentifier]);
-        $user = $this->db->getRepository('OAuthUser')
-                            ->findOneBy(['email' => $userEmail]);
-        $refreshToken = OAuthRefreshToken::fromArray([
+        $client = $this->db->createQuery('SELECT o FROM OAuthClient o WHERE o.client_identifier=:client_identifier')
+        ->setParameter('client_identifier', $clientIdentifier)
+        ->getOneOrNullResult();
+        $user = $this->db->createQuery('SELECT o FROM OAuthUser o WHERE o.username=:username')
+                            ->setParameter('username', $username)
+                            ->getOneOrNullResult();
+        $refreshToken = \OAuthRefreshToken::fromArray([
            'refresh_token'  => $refreshToken,
            'client'         => $client,
            'user'           => $user,
@@ -35,7 +39,7 @@ class OAuthRefreshTokenRepository extends Model implements RefreshTokenInterface
 
     public function unsetRefreshToken($refreshToken)
     {
-        $refreshToken = $this->getRepository('OAuthRefreshToken')->findOneBy(['refresh_token' => $refreshToken]);
+        $refreshToken = $this->getRepository('OAuthRefreshToken')->find(['refresh_token' => $refreshToken]);
         $this->db->remove($refreshToken);
         $this->db->flush();
     }

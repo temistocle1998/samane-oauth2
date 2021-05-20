@@ -8,7 +8,10 @@ class OAuthUser extends EncryptableFieldEntity
 {
     /** @Id @Column(type="integer") @GeneratedValue **/
     private $id;
-
+    /**
+     * @Column(type="string")
+     */
+    private $username;
     /**
      * @Column(type="string")
      */
@@ -22,6 +25,11 @@ class OAuthUser extends EncryptableFieldEntity
     * @OneToMany(targetEntity="OAuthAccessToken", mappedBy="user_id")
     */
     private $oauth_access_tokens;
+     /**
+    * One OAuthUser has many oauthrefreshtokens. This is the inverse side.
+    * @OneToMany(targetEntity="OAuthRefreshToken", mappedBy="user_id")
+    */
+    private $oauth_refresh_tokens;
     /**
      * Get id
      *
@@ -52,6 +60,28 @@ class OAuthUser extends EncryptableFieldEntity
     public function getEmail()
     {
         return $this->email;
+    }
+
+  /**
+     * Set username
+     *
+     * @param string $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
     }
 
     /**

@@ -61,8 +61,8 @@ $server->addGrantType( new RefreshToken($refreshTokenStorage, [
                 // with a new refresh token on each request
                 'always_issue_new_refresh_token' => true,
                 ]));
-        $server->handleTokenRequest(\OAuth2\Request::createFromGlobals())->send();
-
+        $connect = $server->handleTokenRequest(\OAuth2\Request::createFromGlobals())->send();
+        return $connect;
     }
 
     public function AuthorizeObject($clientStorage, $userStorage, $accessTokenStorage, $authorizationCodeStorage)

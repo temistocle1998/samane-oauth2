@@ -27,25 +27,23 @@ class OAuthClientRepository extends Model implements \OAuth2\Storage\ClientCrede
     {
         if($this->db != null)
         {
-            $client = $this->db->createQuery('SELECT o FROM OAuthClient o WHERE o.client_identifier = :client_Identifier')
-            ->setParameter('client_Identifier', $clientIdentifier)
+            $client = $this->db->createQuery('SELECT o FROM OAuthClient o WHERE o.client_identifier = :client_identifier')
+            ->setParameter('client_identifier', $clientIdentifier)
             ->getOneOrNullResult();
             if ($client) 
             {
-                //return $client->verifyClientSecret($clientSecret);
-                    if ($clientSecret != '') {
-                return password_verify($clientSecret, $client->getClientSecret()) ? $client : null;
-            }
-            else{
-                return $user;
-            }
-
+                if ($clientSecret != '') 
+                {
+                    return password_verify($clientSecret, $client->getClientSecret()) ? $client : null;
+                }
+                else{
+                    return $client;
+                }
             }
             else
             {
-
+                return false;
             }
-            return false;
         }
         return 0;
     }

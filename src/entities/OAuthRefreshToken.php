@@ -18,25 +18,25 @@ class OAuthRefreshToken
     private $expires;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
     */
     private $scope;
 
     /**
-     * Many OAuthAccessTokens have one oauthclient. This is the owning side.
+     * Many OAuthRefreshToken have one oauthclient. This is the owning side.
      *
      * @ManyToOne(targetEntity="OAuthClient", inversedBy="oauth_refresh_tokens", fetch="EAGER")
      * @JoinColumn(name="client_id",          referencedColumnName="id")
      */
-    private $client;
+    private $client_id;
 
    /**
-     * Many OAuthAccessTokens have one oauthuser. This is the owning side.
+     * Many OAuthRefreshToken have one oauthuser. This is the owning side.
      *
      * @ManyToOne(targetEntity="OAuthUser", inversedBy="oauth_refresh_tokens", fetch="EAGER")
      * @JoinColumn(name="user_id",          referencedColumnName="id")
      */
-    private $user;
+    private $user_id;
 
     /**
      * Get id
@@ -77,7 +77,7 @@ class OAuthRefreshToken
      * @param string $clientId
      * @return OAuthRefreshToken
      */
-    public function setClientId($clientId)
+    public function setClientId(OAuthClient $clientId = null)
     {
         $this->client_id = $clientId;
 
@@ -97,7 +97,7 @@ class OAuthRefreshToken
     /**
      * Set user_id
      *
-     * @param string $userIdentifier
+     * @param \YourNamespace\Entity\OAuthUser $user
      * @return OAuthRefreshToken
      */
     public function setUserId($userId)
@@ -107,10 +107,10 @@ class OAuthRefreshToken
         return $this;
     }
 
-    /**
-     * Get user_identifier
+   /**
+     * Get user
      *
-     * @return string
+     * @return \src\entities\OAuthUser
      */
     public function getUserId()
     {

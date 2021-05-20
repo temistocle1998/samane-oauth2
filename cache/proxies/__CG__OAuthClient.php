@@ -66,10 +66,10 @@ class OAuthClient extends \OAuthClient implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'OAuthClient' . "\0" . 'id', '' . "\0" . 'OAuthClient' . "\0" . 'client_identifier', '' . "\0" . 'OAuthClient' . "\0" . 'client_secret', '' . "\0" . 'OAuthClient' . "\0" . 'redirect_uri', '' . "\0" . 'OAuthClient' . "\0" . 'oauth_access_tokens', '' . "\0" . 'OAuthClient' . "\0" . 'oauth_authorization_code', 'hashOptions'];
+            return ['__isInitialized__', '' . "\0" . 'OAuthClient' . "\0" . 'id', '' . "\0" . 'OAuthClient' . "\0" . 'client_identifier', '' . "\0" . 'OAuthClient' . "\0" . 'client_secret', '' . "\0" . 'OAuthClient' . "\0" . 'redirect_uri', '' . "\0" . 'OAuthClient' . "\0" . 'oauth_access_tokens', '' . "\0" . 'OAuthClient' . "\0" . 'oauth_refresh_tokens', '' . "\0" . 'OAuthClient' . "\0" . 'oauth_authorization_code', 'hashOptions'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'OAuthClient' . "\0" . 'id', '' . "\0" . 'OAuthClient' . "\0" . 'client_identifier', '' . "\0" . 'OAuthClient' . "\0" . 'client_secret', '' . "\0" . 'OAuthClient' . "\0" . 'redirect_uri', '' . "\0" . 'OAuthClient' . "\0" . 'oauth_access_tokens', '' . "\0" . 'OAuthClient' . "\0" . 'oauth_authorization_code', 'hashOptions'];
+        return ['__isInitialized__', '' . "\0" . 'OAuthClient' . "\0" . 'id', '' . "\0" . 'OAuthClient' . "\0" . 'client_identifier', '' . "\0" . 'OAuthClient' . "\0" . 'client_secret', '' . "\0" . 'OAuthClient' . "\0" . 'redirect_uri', '' . "\0" . 'OAuthClient' . "\0" . 'oauth_access_tokens', '' . "\0" . 'OAuthClient' . "\0" . 'oauth_refresh_tokens', '' . "\0" . 'OAuthClient' . "\0" . 'oauth_authorization_code', 'hashOptions'];
     }
 
     /**

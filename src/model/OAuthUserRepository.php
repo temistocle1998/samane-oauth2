@@ -6,13 +6,27 @@ use OAuth2\Storage\UserCredentialsInterface;
 
 class OAuthUserRepository extends Model implements UserCredentialsInterface
 {
-    public function checkUserCredentials($email, $password)
+    public function checkUserCredentials($username, $password = '')
     {
-        $user = $this->db->getRepository('OAuthUser')->findOneBy(['email' => $email]);
-        if ($user) {
-            return $user->verifyPassword($password);
+        if($this->db != null) {
+            $user = $this->db->createQuery('SELECT o FROM OAuthUser o WHERE o.username = :username')
+                ->setParameter('username', $username)
+                ->getOneOrNullResult();
+            if ($user != null) {
+                if ($password != '') {
+                    return password_verify($password, $user->getPassword()) ? $user : null;
+                    //return password_verify($password, $user->getPassword()) ? $user : null;
+                }
+                else{
+                    return $user;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
-        return false;
+        return 0;
     }
 
     /**
@@ -27,9 +41,11 @@ class OAuthUserRepository extends Model implements UserCredentialsInterface
      * );
      * @endcode
      */
-    public function getUserDetails($email)
+    public function getUserDetails($username)
     {
-        $user = $this->getRepository('OAuthUser')->findOneBy(['email' => $email]);
+        $user = $this->db->createQuery('SELECT o FROM OAuthUser o WHERE o.username=:username')
+            ->setParameter('username', $username)
+            ->getOneOrNullResult();
         if ($user) {
             $user = $user->toArray();
         }
@@ -38,7 +54,6 @@ class OAuthUserRepository extends Model implements UserCredentialsInterface
 
     public function getOAuthUser()
     {
-        
         return $this->db->createQuery('SELECT o FROM OAuthUser o')->getResult();
     }
 }
