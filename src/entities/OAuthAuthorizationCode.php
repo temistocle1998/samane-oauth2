@@ -42,7 +42,7 @@ class OAuthAuthorizationCode
     private $client_id;
 
     /**
-     * @var \YourNamespace\Entity\OAuthUser
+     * @var \src\entities\OAuthUser
      */
     private $user;
 
@@ -200,7 +200,7 @@ class OAuthAuthorizationCode
      * @param \YourNamespace\Entity\OAuthClient $client
      * @return OAuthAuthorizationCode
      */
-    public function setClient(\YourNamespace\Entity\OAuthClient $client = null)
+    public function setClient($client = null)
     {
         $this->client = $client;
 

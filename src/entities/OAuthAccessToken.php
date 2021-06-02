@@ -101,9 +101,9 @@ class OAuthAccessToken
      * @param  string $userIdentifier
      * @return OAuthAccessToken
      */
-    public function setUserId($userId)
+    public function setUserId(OAuthUser $user_id)
     {
-        $this->user_id = $userId;
+        $this->user_id = $user_id;
         return $this;
     }
 
@@ -167,7 +167,7 @@ class OAuthAccessToken
      * @param  \YourNamespace\Entity\OAuthClient $client
      * @return OAuthAccessToken
      */
-    public function setClient(OAuthClient $client = null)
+    public function setClient($client = null)
     {
         $this->client = $client;
         return $this;
@@ -176,7 +176,7 @@ class OAuthAccessToken
     /**
      * Get client
      *
-     * @return \YourNamespace\Entity\OAuthClient
+     * @return \src\entities\OAuthClient
      */
     public function getClient()
     {
@@ -195,10 +195,10 @@ class OAuthAccessToken
     /**
      * Set user
      *
-     * @param  \YourNamespace\Entity\OAuthUser $user
-     * @return OAuthRefreshToken
+     * @param  \src\entities\OAuthUser $user
+     * @return OAuthUser
      */
-    public function setUser(OAuthUser $user = null)
+    public function setUser(OAuthUser $user)
     {
         $this->user = $user;
         return $this;
@@ -207,11 +207,11 @@ class OAuthAccessToken
     /**
      * Get user
      *
-     * @return \YourNamespace\Entity\OAuthUser
+     * @return \src\entities\OAuthUser
      */
     public function getUser()
     {
-        return $this->client;
+        return $this->user;
     }
 
     public function toArray()

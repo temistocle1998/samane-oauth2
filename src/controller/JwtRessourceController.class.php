@@ -12,7 +12,7 @@ class JwtRessourceController extends Controller
     }
     /**
      * ACCEDEZ A LA RESSOURCE EN AJOUTANT LE TOKEN OBTENU
-     * curl http://localhost:8000/Ressources/myRessource -d 'access_token=TOKEN'
+     * curl http://localhost:8000/JwtRessource/myRessource -d 'access_token=TOKEN'
      */
     public function myRessource()
     {
@@ -35,7 +35,7 @@ class JwtRessourceController extends Controller
         if (!$server->verifyResourceRequest(OAuth2\Request::createFromGlobals())) {
             exit("Erreur Jeton invalide !");
         }
-        echo "Success Jeton valide !";
+        echo "Success ! Jeton valide Hi";
     }
 }
 ?>

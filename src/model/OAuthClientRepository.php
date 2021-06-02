@@ -3,7 +3,7 @@ namespace src\model;
 use libs\system\Model; 
 use \OAuth2\Storage\ClientCredentialsInterface;
 
-class OAuthClientRepository extends Model implements \OAuth2\Storage\ClientCredentialsInterface
+class OAuthClientRepository extends Model implements ClientCredentialsInterface
 {
     public function __construct(){
         parent::__construct();

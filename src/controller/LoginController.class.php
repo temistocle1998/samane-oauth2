@@ -28,7 +28,7 @@ class LoginController extends Controller
     public function test()
     {
         $userdb = new OAuthUserRepository();
-        $test = $userdb->checkUserCredentials("yorobo", "passer");
+        $test = $userdb->checkUserCredentials("yorobo", "lamine");
         var_dump($test);
     }
 }

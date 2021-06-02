@@ -28,10 +28,12 @@ class TokenController extends Controller
     }
     /**
      * EFFECTUER CETTE REQUETE POUR OBTENIR UN TOKEN D'ACCES  
-     * curl -u testclient:passer http://localhost:8000/Token/token 
-     * -d 'grant_type=client_credentials'
-     */
-    
+     * curl -u testclient:passer http://localhost:8000/Token/token -d 'grant_type=client_credentials'
+    */
+
+    /* curl -v "http://localhost:8000/Token/token" -d "grant_type=password&client_id=testclient&client_secret=passer&username=yorobo&password=passer"
+    */ 
+
     /**
      * Permet d'obtenir un access_token
      *
@@ -45,9 +47,6 @@ class TokenController extends Controller
         $mg = new OAuthAuthorizationCodeRepository();
         $zd = new OAuthRefreshTokenRepository();
 
-        //$clientStorage = $md->getOAuthClient();
-        //$userStorage = $ad->getOAuthUser();
-        //$accessTokenStorage = $fd->getOAuthAccessToken();
         $authorizationCodeStorage = $mg->getAuthorization();
         $refreshTokenStorage = $zd->getRefreshTokens();
         /**

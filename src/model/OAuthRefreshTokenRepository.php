@@ -18,18 +18,18 @@ class OAuthRefreshTokenRepository extends Model implements RefreshTokenInterface
         return $refreshToken;
     }
 
-    public function setRefreshToken($refreshToken, $clientIdentifier, $username, $expires, $scope = null)
+    public function setRefreshToken($refreshToken, $clientIdentifier, $userId, $expires, $scope = null)
     {
         $client = $this->db->createQuery('SELECT o FROM OAuthClient o WHERE o.client_identifier=:client_identifier')
         ->setParameter('client_identifier', $clientIdentifier)
         ->getOneOrNullResult();
-        $user = $this->db->createQuery('SELECT o FROM OAuthUser o WHERE o.username=:username')
-                            ->setParameter('username', $username)
-                            ->getOneOrNullResult();
+        $user = $this->db->createQuery('SELECT o FROM OAuthUser o WHERE o.id= :userId')
+            ->setParameter('userId', $userId)
+            ->getOneOrNullResult();
         $refreshToken = \OAuthRefreshToken::fromArray([
            'refresh_token'  => $refreshToken,
-           'client'         => $client,
-           'user'           => $user,
+           'client_id'         => $client,
+           'user_id'           => $user,
            'expires'        => (new \DateTime())->setTimestamp($expires),
            'scope'          => $scope,
         ]);

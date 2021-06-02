@@ -6,7 +6,7 @@ use OAuth2\Storage\UserCredentialsInterface;
 
 class OAuthUserRepository extends Model implements UserCredentialsInterface
 {
-    public function checkUserCredentials($username, $password = '')
+    public function checkUserCredentials($username, $password)
     {
         if($this->db != null) {
             $user = $this->db->createQuery('SELECT o FROM OAuthUser o WHERE o.username = :username')
@@ -14,8 +14,14 @@ class OAuthUserRepository extends Model implements UserCredentialsInterface
                 ->getOneOrNullResult();
             if ($user != null) {
                 if ($password != '') {
-                    return password_verify($password, $user->getPassword()) ? $user : null;
-                    //return password_verify($password, $user->getPassword()) ? $user : null;
+                    if(password_verify($password, $user->getPassword()))
+                        {
+                            return $user;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
                 }
                 else{
                     return $user;

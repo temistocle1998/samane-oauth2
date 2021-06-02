@@ -25,6 +25,8 @@ class Authenticate extends \OAuth2\Server
     private $clientStorage;
     private $userStorage;
     private $accessTokenStorage;
+    private $authorizationCodeStorage;
+    private $refreshTokenStorage;
     private $clients;
     public function __construct()
     {
@@ -47,16 +49,13 @@ class Authenticate extends \OAuth2\Server
             ]
         );
         // will be able to handle token requests when "grant_type=client_credentials".
-        //$server->addGrantType(new OAuth2\GrantType\ClientCredentials($clientStorage));
-
         
         // handle the request
         $server->addGrantType(new ClientCredentials($clientStorage));
+        $server->addGrantType(new UserCredentials($userStorage));
         $server->addGrantType(new AuthorizationCode($authorizationCodeStorage));
-		$server->addGrantType(new UserCredentials($userStorage));
 	
-       // $server->addGrantType(new AuthorizationCode($authorizationCodeStorage));
-$server->addGrantType( new RefreshToken($refreshTokenStorage, [
+        $server->addGrantType( new RefreshToken($refreshTokenStorage, [
                 //the refresh token grant request will have a "refresh_token" field
                 // with a new refresh token on each request
                 'always_issue_new_refresh_token' => true,

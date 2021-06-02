@@ -97,12 +97,12 @@ class OAuthRefreshToken
     /**
      * Set user_id
      *
-     * @param \YourNamespace\Entity\OAuthUser $user
-     * @return OAuthRefreshToken
+     * @param \src\entities\OAuthUser $user
+     * @return OAuthUser
      */
-    public function setUserId($userId)
+    public function setUserId(OAuthUser $user_id)
     {
-        $this->user_id = $userId;
+        $this->user_id = $user_id;
 
         return $this;
     }
@@ -179,7 +179,7 @@ class OAuthRefreshToken
     /**
      * Get client
      *
-     * @return \YourNamespace\Entity\OAuthClient
+     * @return \src\entities\OAuthClient
      */
     public function getClient()
     {
@@ -189,7 +189,7 @@ class OAuthRefreshToken
     /**
      * Set user
      *
-     * @param \YourNamespace\Entity\OAuthUser $user
+     * @param \src\entities\OAuthUser $user
      * @return OAuthRefreshToken
      */
     public function setUser(OAuthUser $user = null)
@@ -206,7 +206,7 @@ class OAuthRefreshToken
      */
     public function getUser()
     {
-        return $this->client;
+        return $this->user;
     }
 
     public function toArray()
