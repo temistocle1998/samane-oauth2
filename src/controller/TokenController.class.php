@@ -46,9 +46,6 @@ class TokenController extends Controller
         $fd = new OAuthAccessTokenRepository();
         $mg = new OAuthAuthorizationCodeRepository();
         $zd = new OAuthRefreshTokenRepository();
-
-        $authorizationCodeStorage = $mg->getAuthorization();
-        $refreshTokenStorage = $zd->getRefreshTokens();
         /**
          * Handle a request for an OAuth2.0 Access Token and 
          * send the response to the client
@@ -66,8 +63,14 @@ class TokenController extends Controller
      */
     public function testJwt()
     {
+        $ad = new OAuthUserRepository();
+        $zd = new OAuthRefreshTokenRepository();
+         /**
+         * Handle a request for an OAuth2.0 Access Token and 
+         * send the response to the client
+         */
         $jwt = new OAuthJwt();
-        $jwt->authObject();
+        $jwt->authObject($ad, $zd);
     }
 }
 ?>

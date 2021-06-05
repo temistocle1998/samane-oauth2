@@ -7,8 +7,6 @@ use \OAuth2\Storage\ClientCredentialsInterface;
 use \OAuth2\GrantType\AuthorizationCode;
 use \OAuth2\GrantType\RefreshToken;
 use src\model\OAuthClientRepository;
-use Doctrine\ORM\EntityRepository;
-
 use src\model\OAuthUserRepository;
 use src\model\OAuthAccessTokenRepository;
 use src\model\OAuthAuthorizationCodeRepository;
@@ -21,7 +19,7 @@ ini_set('display_errors',1);error_reporting(E_ALL);
 //use Doctrine\ORM\EntityManager;
 ini_set('display_errors',1);error_reporting(E_ALL);
 
-class OAuthJwt extends \OAuth2\Server
+class OAuthJwt extends Server
 {
     private $clientStorage;
     private $userStorage;
@@ -32,12 +30,12 @@ class OAuthJwt extends \OAuth2\Server
 
     }
 
-    public function authObject()
+    public function authObject($userStorage, $refreshStorage)
     {
         $publicKey  = file_get_contents('/home/lamine/FreeDev/samane-oauth2/src/config/pubkey.pem');
         $privateKey = file_get_contents('/home/lamine/FreeDev/samane-oauth2/src/config/privatekey.pem');
                 // create storage
-        $storage = new \OAuth2\Storage\Memory(array(
+        $memStorage = new \OAuth2\Storage\Memory(array(
         'keys' => array(
             'public_key'  => $publicKey,
             'private_key' => $privateKey,
@@ -47,16 +45,22 @@ class OAuthJwt extends \OAuth2\Server
             'CLIENT_ID' => ['client_secret' => 'CLIENT_SECRET']
         ),
     ));
-        $server = new \OAuth2\Server(
-            $storage, [
+        $server = new \OAuth2\Server([
+            'access_token' => $memStorage, // Where you want to store your access tokens 
+            'public_key' => $memStorage, // Where you have stored your keys
+            'client_credentials' => $memStorage, // Depends on your keysclient_credentials storage location, mine is in memory, but can be stored in different storage types.
+            'user_credentials' => $userStorage, // Depend on your where your users are being stored
+            'refresh_token' => $refreshStorage // Refresh tokens are being stored in the db
+    ], [
             'use_jwt_access_tokens' => true,
             ]
         );
 
         
         // handle the request
-        $server->addGrantType(new \OAuth2\GrantType\ClientCredentials($storage));
-    
+        $server->addGrantType(new \OAuth2\GrantType\UserCredentials($userStorage));
+        $server->addGrantType(new \OAuth2\GrantType\RefreshToken($refreshStorage));
+
         $server->handleTokenRequest(\OAuth2\Request::createFromGlobals())->send();
 
     }  

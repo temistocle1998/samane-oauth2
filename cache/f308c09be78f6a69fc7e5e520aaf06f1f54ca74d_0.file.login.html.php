@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2021-05-20 17:11:23
+/* Smarty version 3.1.30, created on 2021-06-02 23:43:56
   from "/home/lamine/FreeDev/samane-oauth2/src/view/login.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_60a6983b4e29c5_87847221',
+  'unifunc' => 'content_60b817bca490c7_55545643',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f308c09be78f6a69fc7e5e520aaf06f1f54ca74d' => 
     array (
       0 => '/home/lamine/FreeDev/samane-oauth2/src/view/login.html',
-      1 => 1621530679,
+      1 => 1622677430,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_60a6983b4e29c5_87847221 (Smarty_Internal_Template $_smarty_tpl) {
+function content_60b817bca490c7_55545643 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,10 +40,8 @@ public/css/samane.css"/>
 Token/token" method="POST">
                 <div class="form-group">
                     <input type="hidden" name="grant_type" value="password">
-                    <input type="hidden" name="client_id" value="testclient">
-                    <input type="hidden" name="client_secret" value="passer">
-                    <label for="">Email</label>
-                    <input type="email" name="username" id="email" class="form-control" placeholder="" >
+                    <label for="">Username</label>
+                    <input type="text" name="username" id="username" class="form-control" placeholder="" >
                 </div>
                 <div class="form-group">
                     <label for="">Password</label>
