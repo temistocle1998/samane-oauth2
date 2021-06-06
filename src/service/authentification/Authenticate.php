@@ -17,10 +17,7 @@ use src\model\OAuthRefreshTokenRepository;
 ini_set('display_errors',1);error_reporting(E_ALL);
 
 
-
-//use Doctrine\ORM\EntityManager;
-
-class Authenticate extends \OAuth2\Server
+class Authenticate extends Server
 {
     private $clientStorage;
     private $userStorage;
@@ -36,7 +33,7 @@ class Authenticate extends \OAuth2\Server
     public function authObject($clientStorage, $userStorage, $accessTokenStorage, $authorizationCodeStorage, $refreshTokenStorage)
     {
         // Pass the doctrine storage objects to the OAuth2 server class
-        $server = new \OAuth2\Server(
+        $server = new Server(
             [
             'client_credentials' => $clientStorage,
             'user_credentials'   => $userStorage,

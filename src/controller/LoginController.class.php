@@ -25,11 +25,5 @@ class LoginController extends Controller
     	return $this->view->load("login");
     }
 
-    public function test()
-    {
-        $userdb = new OAuthUserRepository();
-        $test = $userdb->checkUserCredentials("yorobo", "lamine");
-        var_dump($test);
-    }
 }
 ?>

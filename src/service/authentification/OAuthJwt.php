@@ -14,11 +14,6 @@ use src\model\OAuthRefreshTokenRepository;
 // error reporting (this is a demo, after all!)
 ini_set('display_errors',1);error_reporting(E_ALL);
 
-
-
-//use Doctrine\ORM\EntityManager;
-ini_set('display_errors',1);error_reporting(E_ALL);
-
 class OAuthJwt extends Server
 {
     private $clientStorage;
@@ -30,7 +25,7 @@ class OAuthJwt extends Server
 
     }
 
-    public function authObject($userStorage, $refreshStorage)
+    public function authObject($clientStorage, $userStorage, $refreshStorage)
     {
         $publicKey  = file_get_contents('/home/lamine/FreeDev/samane-oauth2/src/config/pubkey.pem');
         $privateKey = file_get_contents('/home/lamine/FreeDev/samane-oauth2/src/config/privatekey.pem');
@@ -45,10 +40,10 @@ class OAuthJwt extends Server
             'CLIENT_ID' => ['client_secret' => 'CLIENT_SECRET']
         ),
     ));
-        $server = new \OAuth2\Server([
+        $server = new Server([
             'access_token' => $memStorage, // Where you want to store your access tokens 
             'public_key' => $memStorage, // Where you have stored your keys
-            'client_credentials' => $memStorage, // Depends on your keysclient_credentials storage location, mine is in memory, but can be stored in different storage types.
+            'client_credentials' => $clientStorage, // Depends on your keysclient_credentials storage location, mine is in memory, but can be stored in different storage types.
             'user_credentials' => $userStorage, // Depend on your where your users are being stored
             'refresh_token' => $refreshStorage // Refresh tokens are being stored in the db
     ], [

@@ -63,6 +63,11 @@ class TokenController extends Controller
      */
     public function testJwt()
     {
+        /*curl http://localhost:8000/Token/testJwt -u 'testclient:lamine' -d 'grant_type=password&passer&username=ngor&password=lamine'
+        */
+        /*curl http://localhost:8000/Token/testJwt -u 'testclient:lamine' -d 'grant_type=password&passer&username=yorobo&password=lamine'
+        */
+        $md = new OAuthClientRepository();
         $ad = new OAuthUserRepository();
         $zd = new OAuthRefreshTokenRepository();
          /**
@@ -70,7 +75,7 @@ class TokenController extends Controller
          * send the response to the client
          */
         $jwt = new OAuthJwt();
-        $jwt->authObject($ad, $zd);
+        $jwt->authObject($md, $ad, $zd);
     }
 }
 ?>

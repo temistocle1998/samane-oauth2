@@ -17,8 +17,8 @@ class RessourcesController extends Controller
     }
     /*
      *  ACCEDEZ A LA RESSOURCE EN AJOUTANT LE TOKEN OBTENU
-        curl http://localhost:8000/Ressources/myRessource -d 'access_token=TOKEN'
-    */
+     *  curl http://localhost:8000/Ressources/myRessource -d 'access_token=TOKEN'
+     */
 
     public function myRessource()
     {
