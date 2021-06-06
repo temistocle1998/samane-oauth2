@@ -53,8 +53,8 @@ class OAuthJwt extends Server
 
         
         // handle the request
-        $server->addGrantType(new \OAuth2\GrantType\UserCredentials($userStorage));
-        $server->addGrantType(new \OAuth2\GrantType\RefreshToken($refreshStorage));
+        $server->addGrantType(new UserCredentials($userStorage));
+        $server->addGrantType(new RefreshToken($refreshStorage));
 
         $server->handleTokenRequest(\OAuth2\Request::createFromGlobals())->send();
 

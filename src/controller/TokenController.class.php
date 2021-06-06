@@ -31,7 +31,7 @@ class TokenController extends Controller
      * curl -u testclient:passer http://localhost:8000/Token/token -d 'grant_type=client_credentials'
     */
 
-    /* curl -v "http://localhost:8000/Token/token" -d "grant_type=password&client_id=testclient&client_secret=passer&username=yorobo&password=passer"
+    /* curl -v "http://localhost:8000/Token/token" -d "grant_type=password&client_id=testclient&client_secret=passer&username=yorobo&password=lamine"
     */ 
 
     /**
